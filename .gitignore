@@ -9,3 +9,7 @@ wheels/
 # Virtual environments
 .venv
 /database
+.env
+# local env files
+.env*
+.env*.local
