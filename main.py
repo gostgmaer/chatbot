@@ -26,8 +26,8 @@ while True:
         continue
 
     try:
-        response = service.send_message(chat.id, message)
-        ui.assistant_message(response)
+        response_stream = service.send_message_stream(chat.id, message)
+        ui.stream_response(response_stream)
 
     except Exception as e:
         ui.error(str(e))

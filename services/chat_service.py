@@ -19,16 +19,25 @@ class ChatService:
         self.repo.add_message(chat_id=chat_id, role="assistant", content=response.text)
         return response.text
 
+    def send_message_stream(self, chat_id: int, message: str):
+        self.repo.add_message(chat_id=chat_id, role="user", content=message)
+        history = self._build_history(chat_id=chat_id)
+        response_stream = self.bot.ask_stream(history, self.prompt.system_prompt)
+        
+        full_response = []
+        for chunk in response_stream:
+            if chunk.text:
+                full_response.append(chunk.text)
+            yield chunk
+            
+        self.repo.add_message(chat_id=chat_id, role="assistant", content="".join(full_response))
+
     def _build_history(self, chat_id: int):
         history = []
         messages = self.repo.get_messages(chat_id=chat_id)
-        # return [Message(role=msg.role, content=msg.content) for msg in messages]
         for message in messages:
-
             role = "user"
-
-        if message.role == "assistant":
-            role = "model"
-
-        history.append({"role": role, "parts": [{"text": message.content}]})
+            if message.role == "assistant":
+                role = "model"
+            history.append({"role": role, "parts": [{"text": message.content}]})
         return history

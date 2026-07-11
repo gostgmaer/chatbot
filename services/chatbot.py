@@ -16,5 +16,9 @@ class GeminiChatbot:
             config=types.GenerateContentConfig(system_instruction=system_prompt),
         )
 
-    def stream(self, message: str):
-        return self.chat.send_message_stream(message)
+    def ask_stream(self, history: list[Content], system_prompt: str):
+        return self.client.models.generate_content_stream(
+            model=MODEL,
+            contents=history,
+            config=types.GenerateContentConfig(system_instruction=system_prompt),
+        )

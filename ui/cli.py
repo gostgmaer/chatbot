@@ -159,24 +159,31 @@ class CLI:
     # ==========================================================
 
     def stream_response(self, stream):
-
         self.assistant_header()
 
         with self.console.status(
             "[cyan]Thinking...[/cyan]",
             spinner="dots",
         ):
+            iterator = iter(stream)
+            try:
+                first_chunk = next(iterator)
+            except StopIteration:
+                return
 
-            pass
+        def get_text(chunk):
+            if isinstance(chunk, str):
+                return chunk
+            return getattr(chunk, "text", "") or ""
 
-        for chunk in stream:
+        text = get_text(first_chunk)
+        if text:
+            self.console.print(text, end="", soft_wrap=True)
 
-            if chunk.text:
-                self.console.print(
-                    chunk.text,
-                    end="",
-                    soft_wrap=True,
-                )
+        for chunk in iterator:
+            text = get_text(chunk)
+            if text:
+                self.console.print(text, end="", soft_wrap=True)
 
         self.console.print("\n")
 
