@@ -72,21 +72,20 @@ class CLI:
     def banner(self):
 
         self.console.print()
-
-        self.console.print(
-            Panel(
-                Align.center(
-                    "[bold cyan]🤖 EasyDev AI Assistant[/bold cyan]\n"
-                    "[grey70]Powered by Gemini[/grey70]"
-                ),
-                title="[bold]EasyDev AI[/bold]",
-                border_style="cyan",
-                padding=(1, 4),
-                expand=True,
-            )
+        banner = Panel(
+            Align.center(
+                "[bold bright_cyan]🤖 EasyDev AI Assistant[/bold bright_cyan]\n"
+                "[grey70]Powered by Gemini • AI Engineering Learning Project[/grey70]"
+            ),
+            title="[bold]EasyDev[/bold]",
+            subtitle="[grey70] Type /help for commands[/grey70]",
+            border_style="cyan",
+            padding=(1, 4),
+            expand=True,
         )
+        self.console.print(banner)
 
-        self.console.print("[grey70]Type /help for commands • /exit to quit[/grey70]\n")
+        # self.console.print("[grey70]Type /help for commands • /exit to quit[/grey70]\n")
 
     # ==========================================================
     # Menu
