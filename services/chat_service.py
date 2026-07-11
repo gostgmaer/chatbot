@@ -1,5 +1,5 @@
 from model.chat import Chat
-from prompt_manager import PromptManager
+from services.prompt_manager import PromptManager
 from repository.chat import ChatRepository
 from services.chatbot import GeminiChatbot
 
@@ -15,14 +15,14 @@ class ChatService:
     def send_message(self, chat_id: int, message: str):
         self.repo.add_message(chat_id=chat_id, role="user", content=message)
         history = self._build_history(chat_id=chat_id)
-        response = self.bot.ask(history, self.prompt.system_prompt)
+        response = self.bot.ask(history, self.prompt.current_prompt())
         self.repo.add_message(chat_id=chat_id, role="assistant", content=response.text)
         return response.text
 
     def send_message_stream(self, chat_id: int, message: str):
         self.repo.add_message(chat_id=chat_id, role="user", content=message)
         history = self._build_history(chat_id=chat_id)
-        response_stream = self.bot.ask_stream(history, self.prompt.system_prompt)
+        response_stream = self.bot.ask_stream(history, self.prompt.current_prompt())
         
         full_response = []
         for chunk in response_stream:

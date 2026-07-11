@@ -20,5 +20,7 @@ class GeminiChatbot:
         return self.client.models.generate_content_stream(
             model=MODEL,
             contents=history,
-            config=types.GenerateContentConfig(system_instruction=system_prompt),
+            config=types.GenerateContentConfig(
+                system_instruction=system_prompt,
+            ),
         )

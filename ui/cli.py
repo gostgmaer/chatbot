@@ -265,6 +265,7 @@ class CLI:
         table.add_column("Description")
 
         table.add_row("/help", "Show help")
+        table.add_row("/prompt [name]", "Show or change active prompt")
         table.add_row("/new", "New chat")
         table.add_row("/list", "List chats")
         table.add_row("/history", "Show history")
