@@ -11,5 +11,5 @@ wheels/
 /database
 .env
 # local env files
-.env*
+.env
 .env*.local
