@@ -9,18 +9,22 @@ class GeminiChatbot:
     def __init__(self):
         self.client = genai.Client(api_key=API_KEY)
 
-    def ask(self, history: list[Content], system_prompt: str):
+    def ask(self, history: list[Content], system_prompt: str, tools: list = None):
         return self.client.models.generate_content(
             model=MODEL,
             contents=history,
-            config=types.GenerateContentConfig(system_instruction=system_prompt),
+            config=types.GenerateContentConfig(
+                system_instruction=system_prompt,
+                tools=tools,
+            ),
         )
 
-    def ask_stream(self, history: list[Content], system_prompt: str):
+    def ask_stream(self, history: list[Content], system_prompt: str, tools: list = None):
         return self.client.models.generate_content_stream(
             model=MODEL,
             contents=history,
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
+                tools=tools,
             ),
         )
