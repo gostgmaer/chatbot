@@ -3,7 +3,6 @@ from prompt_manager import PromptManager
 from repository.chat import ChatRepository
 from services.chatbot import GeminiChatbot
 
-
 class ChatService:
     def __init__(self):
         self.repo = ChatRepository()
