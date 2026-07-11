@@ -122,27 +122,19 @@ class CLI:
     # ==========================================================
 
     def show_chat_header(self, title):
-
         self.console.print()
-
         self.console.print(Rule(f"[bold cyan]{title}[/bold cyan]"))
 
     def user_input(self):
-
         self.console.print("\n[bold green]👤 You[/bold green]")
-
         return Prompt.ask("[green]❯[/green]")
 
     def assistant_header(self):
-
         self.console.print("\n[bold blue]🤖 EasyDev AI[/bold blue]")
 
     def assistant_message(self, text):
-
         self.assistant_header()
-
         self.console.print(Markdown(text))
-
         self.console.print()
 
     # ==========================================================
@@ -151,7 +143,6 @@ class CLI:
 
     def stream_response(self, stream):
         self.assistant_header()
-
         with self.console.status(
             "[cyan]Thinking...[/cyan]",
             spinner="dots",
@@ -166,7 +157,6 @@ class CLI:
             if isinstance(chunk, str):
                 return chunk
             return getattr(chunk, "text", "") or ""
-
         text = get_text(first_chunk)
         if text:
             self.console.print(text, end="", soft_wrap=True)
