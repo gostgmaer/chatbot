@@ -40,8 +40,10 @@ CLI
 
 ===============================================================
 """
+
 import shutil
 
+from rich.align import Align
 from rich.console import Console
 from rich.panel import Panel
 from rich.rule import Rule
@@ -52,6 +54,7 @@ from rich.status import Status
 from rich.text import Text
 
 console = Console()
+width = shutil.get_terminal_size().columns
 
 
 class CLI:
@@ -71,16 +74,19 @@ class CLI:
         self.console.print()
 
         self.console.print(
-            Panel.fit(
-                "[bold cyan]🤖 EasyDev AI Assistant[/bold cyan]\n"
-                "[grey70]Powered by Gemini[/grey70]",
+            Panel(
+                Align.center(
+                    "[bold cyan]🤖 EasyDev AI Assistant[/bold cyan]\n"
+                    "[grey70]Powered by Gemini[/grey70]"
+                ),
+                title="[bold]EasyDev AI[/bold]",
                 border_style="cyan",
+                padding=(1, 4),
+                expand=True,
             )
         )
 
-        self.console.print(
-            "[grey70]Type /help for commands • /exit to quit[/grey70]\n"
-        )
+        self.console.print("[grey70]Type /help for commands • /exit to quit[/grey70]\n")
 
     # ==========================================================
     # Menu
@@ -89,9 +95,7 @@ class CLI:
     def menu(self):
 
         table = Table(
-            title="Main Menu",
-            show_header=False,
-            border_style="cyan",
+            title="Main Menu", show_header=False, border_style="cyan", width=width
         )
 
         table.add_column()
@@ -122,35 +126,23 @@ class CLI:
 
         self.console.print()
 
-        self.console.print(
-            Rule(
-                f"[bold cyan]{title}[/bold cyan]"
-            )
-        )
+        self.console.print(Rule(f"[bold cyan]{title}[/bold cyan]"))
 
     def user_input(self):
 
-        self.console.print(
-            "\n[bold green]👤 You[/bold green]"
-        )
+        self.console.print("\n[bold green]👤 You[/bold green]")
 
-        return Prompt.ask(
-            "[green]❯[/green]"
-        )
+        return Prompt.ask("[green]❯[/green]")
 
     def assistant_header(self):
 
-        self.console.print(
-            "\n[bold blue]🤖 EasyDev AI[/bold blue]"
-        )
+        self.console.print("\n[bold blue]🤖 EasyDev AI[/bold blue]")
 
     def assistant_message(self, text):
 
         self.assistant_header()
 
-        self.console.print(
-            Markdown(text)
-        )
+        self.console.print(Markdown(text))
 
         self.console.print()
 
@@ -204,21 +196,15 @@ class CLI:
 
     def success(self, message):
 
-        self.console.print(
-            f"[bold green]✓ {message}[/bold green]"
-        )
+        self.console.print(f"[bold green]✓ {message}[/bold green]")
 
     def warning(self, message):
 
-        self.console.print(
-            f"[bold yellow]! {message}[/bold yellow]"
-        )
+        self.console.print(f"[bold yellow]! {message}[/bold yellow]")
 
     def error(self, message):
 
-        self.console.print(
-            f"[bold red]✗ {message}[/bold red]"
-        )
+        self.console.print(f"[bold red]✗ {message}[/bold red]")
 
     # ==========================================================
     # Confirmation
@@ -265,23 +251,15 @@ class CLI:
 
             if message.role == "user":
 
-                self.console.print(
-                    "[bold green]👤 You[/bold green]"
-                )
+                self.console.print("[bold green]👤 You[/bold green]")
 
             else:
 
-                self.console.print(
-                    "[bold blue]🤖 EasyDev[/bold blue]"
-                )
+                self.console.print("[bold blue]🤖 EasyDev[/bold blue]")
 
-            self.console.print(
-                Markdown(message.content)
-            )
+            self.console.print(Markdown(message.content))
 
-            self.console.print(
-                Rule(style="grey35")
-            )
+            self.console.print(Rule(style="grey35"))
 
     # ==========================================================
     # Help
